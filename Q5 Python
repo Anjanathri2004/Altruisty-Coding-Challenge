@@ -1,0 +1,50 @@
+def find_fittest_trainees(oxygen_levels):
+    # Number of trainees
+    trainees = 3
+    # Number of rounds
+    rounds = 3
+    
+    # Check if all oxygen levels are in the valid range (1 to 100)
+    for level in oxygen_levels:
+        if level < 1 or level > 100:
+            return "INVALID INPUT"
+    
+    # Calculate average oxygen levels for each trainee
+    average_oxygen = []
+    for i in range(trainees):
+        # Sum of the oxygen levels for each trainee
+        total = 0
+        for j in range(rounds):
+            total += oxygen_levels[i + j * trainees]
+        average_oxygen.append(round(total / rounds))
+    
+    # Find the maximum average oxygen level
+    max_avg = max(average_oxygen)
+    
+    # If the maximum average oxygen level is less than 70, all trainees are unfit
+    if max_avg < 70:
+        return "All trainees are unfit"
+    
+    # Find the trainees with the maximum average oxygen level
+    fittest_trainees = []
+    for i in range(trainees):
+        if average_oxygen[i] == max_avg:
+            fittest_trainees.append(i + 1)  # Trainee numbers are 1-indexed
+    
+    # Format the output
+    result = ""
+    for trainee in fittest_trainees:
+        result += f"Trainee Number : {trainee}\n"
+    
+    return result.strip()
+
+# Input Handling
+oxygen_levels = []
+print("Enter the oxygen levels for the trainees (in the range of 1 to 100):")
+for i in range(9):
+    oxygen_level = int(input())
+    oxygen_levels.append(oxygen_level)
+
+# Call the function and display the result
+result = find_fittest_trainees(oxygen_levels)
+print(result)
