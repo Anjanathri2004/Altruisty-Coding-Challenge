@@ -1,0 +1,39 @@
+def max_profit(prices):
+    # Edge case: if there are no prices or only one day, no profit can be made
+    if len(prices) == 0:
+        return 0
+    
+    # Initialize the minimum price as a very large number
+    min_price = float('inf')
+    
+    # Initialize the maximum profit to zero
+    max_profit = 0
+    
+    # Iterate through the list of prices
+    for price in prices:
+        # Update the minimum price if the current price is lower
+        if price < min_price:
+            min_price = price
+        
+        # Calculate the current profit if Ratan sells at the current price
+        current_profit = price - min_price
+        
+        # Update the maximum profit if the current profit is higher
+        if current_profit > max_profit:
+            max_profit = current_profit
+    
+    return max_profit
+
+# Get the number of days from the user
+n = int(input("Enter the number of days: "))
+
+# Get the stock prices from the user (space-separated input)
+prices = list(map(int, input(f"Enter the stock prices for {n} days (space-separated): ").split()))
+
+# Check if the number of prices matches the number of days
+if len(prices) != n:
+    print("Error: The number of prices entered does not match the number of days.")
+else:
+    # Calculate and print the maximum profit
+    result = max_profit(prices)
+    print("Maximum profit:", result)
