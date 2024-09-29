@@ -1,0 +1,29 @@
+def max_of_minimums(arr, k):
+    n = len(arr)
+    
+    # List to store the minimums of each subarray of length k
+    min_values = []
+    
+    # Slide the window of size k over the array
+    for i in range(n - k + 1):
+        # Find the minimum in the current window (subarray of length k)
+        current_min = min(arr[i:i+k])
+        min_values.append(current_min)
+    
+    # Return the maximum of the minimums
+    return max(min_values)
+
+# Get the size of the segment
+k = int(input("Enter the length of the segment: "))
+
+# Get the size of the array
+n = int(input("Enter the size of the array: "))
+
+# Get the elements of the array
+arr = []
+for i in range(n):
+    arr.append(int(input()))
+
+# Call the function and print the result
+result = max_of_minimums(arr, k)
+print(result)
