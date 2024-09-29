@@ -1,0 +1,29 @@
+def find_odd_balloon(N, balloons):
+    # Dictionary to store the frequency of each balloon color
+    frequency = {}
+    
+    # Count the frequency of each balloon
+    for balloon in balloons:
+        if balloon in frequency:
+            frequency[balloon] += 1
+        else:
+            frequency[balloon] = 1
+    
+    # Find the first balloon with an odd frequency
+    for balloon in balloons:
+        if frequency[balloon] % 2 != 0:
+            return balloon
+    
+    # If no balloon has an odd frequency
+    return "All are even"
+
+# Input Handling
+N = int(input("Enter the number of balloons: "))
+
+balloons = []
+for i in range(N):
+    balloons.append(input().strip())
+
+# Call the function and print the result
+result = find_odd_balloon(N, balloons)
+print(result)
