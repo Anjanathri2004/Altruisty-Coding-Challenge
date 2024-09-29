@@ -1,0 +1,72 @@
+def count_frogs_between_stones(s, start_indices, end_indices):
+    n = len(s)
+    
+    # Arrays to store nearest stones and prefix sum of frogs
+    nearest_left_stone = [-1] * n
+    nearest_right_stone = [-1] * n
+    prefix_frogs = [0] * n
+
+    # Preprocess for nearest left stones and frog counts
+    left = -1
+    frog_count = 0
+    for i in range(n):
+        if s[i] == '|':
+            left = i
+        nearest_left_stone[i] = left
+        if s[i] == '*':
+            frog_count += 1
+        prefix_frogs[i] = frog_count
+
+    # Preprocess for nearest right stones
+    right = -1
+    for i in range(n-1, -1, -1):
+        if s[i] == '|':
+            right = i
+        nearest_right_stone[i] = right
+
+    result = []
+    
+    # For each query, calculate the number of frogs
+    for i in range(len(start_indices)):
+        start = start_indices[i] - 1  # Convert to 0-indexed
+        end = end_indices[i] - 1  # Convert to 0-indexed
+
+        # Find the nearest right stone at or after start
+        left_stone = nearest_right_stone[start]
+        # Find the nearest left stone at or before end
+        right_stone = nearest_left_stone[end]
+
+        # Check if the range is valid
+        if left_stone != -1 and right_stone != -1 and left_stone < right_stone:
+            frogs_between_stones = prefix_frogs[right_stone] - prefix_frogs[left_stone]
+            result.append(frogs_between_stones)
+        else:
+            result.append(0)
+
+    return result
+
+
+# Get the input string from the user
+s = input("Enter the string (containing '*' for frogs and '|' for stones): ")
+
+# Get the number of queries
+q = int(input("Enter the number of queries: "))
+
+# Get the start and end indices from the user
+start_indices = []
+end_indices = []
+
+print("Enter the start indices:")
+for _ in range(q):
+    start_indices.append(int(input()))
+
+print("Enter the end indices:")
+for _ in range(q):
+    end_indices.append(int(input()))
+
+# Call the function and get the result
+output = count_frogs_between_stones(s, start_indices, end_indices)
+
+# Print the results for each query
+for result in output:
+    print(result)
